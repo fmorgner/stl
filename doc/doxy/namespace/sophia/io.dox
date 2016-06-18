@@ -1,0 +1,11 @@
+/**
+ * @namespace sophia::io
+ * @author Felix Morgner
+ * @since 0.1
+ *
+ * @brief The Sophia Template Library IO module
+ */
+
+/**
+ * @defgroup sophia_io Input/Output functionality
+ */

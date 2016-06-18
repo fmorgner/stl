@@ -1,0 +1,7 @@
+/**
+ * @namespace sophia::meta
+ * @author Felix Morgner
+ * @since 0.1
+ *
+ * @brief The Sophia Template Library Meta-Programming module
+ */
