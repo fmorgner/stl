@@ -26,6 +26,8 @@ import os
 import subprocess
 import re
 
+sys.path.append(os.path.abspath('../ext'))
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
