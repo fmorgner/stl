@@ -31,7 +31,7 @@ INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 2
 ALIASES                =
-EXTENSION_MAPPING      = h=C++
+EXTENSION_MAPPING      = hpp=C++
 BUILTIN_STL_SUPPORT    = YES
 EXTRACT_LOCAL_CLASSES  = NO
 EXTRACT_PRIVATE        = YES
@@ -46,7 +46,8 @@ SHOW_NAMESPACES        = YES
 SORT_MEMBERS_CTORS_1ST = YES
 QUIET                  = YES
 WARN_IF_UNDOCUMENTED   = NO
-INPUT                  = ../include ../doc/doxygen
+INPUT                  = ../include \
+                         ../doc/doxy
 FILE_PATTERNS          = *.hpp *.dox
 RECURSIVE              = YES
 REFERENCED_BY_RELATION = YES
