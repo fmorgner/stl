@@ -1,7 +1,7 @@
 /**
  * @namespace sophia::concept
- * @author Felix Morgner
+ * @author felix morgner
  * @since 0.1
  *
- * @brief The Sophia Template Library Concepts module
+ * @brief the sophia template library concepts module
  */

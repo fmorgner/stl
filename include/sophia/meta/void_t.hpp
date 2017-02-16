@@ -1,5 +1,5 @@
-#ifndef SOPHIA_INTERNAL__VOID_T
-#define SOPHIA_INTERNAL__VOID_T
+#ifndef SOPHIA_META__VOID_T
+#define SOPHIA_META__VOID_T
 
 /**
  * @file void_t.hpp

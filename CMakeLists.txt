@@ -1,84 +1,24 @@
-cmake_minimum_required(VERSION 3.0)
-project(sophia CXX)
+cmake_minimum_required(VERSION 3.2)
+project(sophia
+  LANGUAGES CXX
+  VERSION 0.0.1
+  )
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "The build type" FORCE)
 endif()
 
-option(BUILD_DOCUMENTATION          "Build the Sophia Template Library documentation." OFF)
-option(BUILD_DOCUMENTATION_ONLY     "Only build the documentation not the libraries."  OFF)
-option(BUILD_INTERNAL_DOCUMENTATION "Generate internal developer documentation."       OFF)
-option(BUILD_SOPHIA_TESTS           "Build and run the unit tests."                    ON )
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/")
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+set(CXX_VERSION "c++14")
+include("CompilerSetup")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" CACHE STRING "The output path for executables" FORCE)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-set(CMAKE_CXX_FLAGS "-std=c++14 -pedantic -Wall -Wextra -Werror")
+include_directories("include")
+add_subdirectory("src")
 
 get_directory_property(HAS_PARENT PARENT_DIRECTORY)
-
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  option(WITH_ADDRESS_SANITIZER       "Include address/memory checks." OFF)
-  option(WITH_UNDEFINED_SANITIZER     "Include undefined behavior checks." OFF)
-  string(APPEND CMAKE_CXX_FLAGS " -Weverything")
-
-  if(WITH_ADDRESS_SANITIZER OR WITH_UNDEFINED_SANITIZER)
-    string(APPEND CMAKE_CXX_FLAGS " -fno-omit-frame-pointer")
-
-    set(SANITIZERS "")
-
-    if(WITH_ADDRESS_SANITIZER)
-      list(APPEND SANITIZERS "address")
-    endif()
-
-    if(WITH_UNDEFINED_SANITIZER)
-      list(APPEND SANITIZERS "undefined")
-    endif()
-
-    string(REPLACE ";" "," SANITIZERS "${SANITIZERS}")
-    string(APPEND CMAKE_CXX_FLAGS " -fsanitize=${SANITIZERS}")
-  endif()
-endif()
-
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -Os")
-
-if(BUILD_DOCUMENTATION_ONLY)
-  set(BUILD_DOCUMENTATION ON CACHE BOOL "Build the Sophia Template Library documentation." FORCE)
-else()
-  include_directories(SYSTEM "include")
-
-  if(BUILD_SOPHIA_TESTS)
-    include(CUTE)
-    include_directories(SYSTEM "third_party/cute")
-    add_subdirectory(test)
-  endif()
-endif()
-
-if(BUILD_DOCUMENTATION OR BUILD_INTERNAL_DOCUMENTATION)
-  find_package(Doxygen REQUIRED)
-
-  set(GENERATE_INTERNAL_DOCS NO)
-
-  if(BUILD_INTERNAL_DOCUMENTATION)
-    set(GENERATE_INTERNAL_DOCS YES)
-
-    if(NOT BUILD_DOCUMENTATION)
-      set(BUILD_DOCUMENTATION ON CACHE BOOL "Build the Sophia Template Library documentation." FORCE)
-    endif()
-  endif()
-
-  add_custom_target(${PROJECT_NAME}_doc ALL ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                    COMMENT "Generating API documentation" VERBATIM)
-
-  add_custom_target(${PROJECT_NAME}_doc_pdf ALL make pdf &>/dev/null
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/latex
-                    DEPENDS ${PROJECT_NAME}_doc
-                    COMMENT "Compiling API documentation")
-endif()
-
 if(HAS_PARENT)
   set(SOPHIA_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include" PARENT_SCOPE)
 endif()

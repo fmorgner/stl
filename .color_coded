@@ -1,5 +1,0 @@
--fcolor-diagnostics
--xc++
--std=c++14
--isystem/usr/include/c++/6.1.1
--isystem include

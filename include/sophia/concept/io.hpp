@@ -1,7 +1,7 @@
 #ifndef SOPHIA_CONCEPT__IO
 #define SOPHIA_CONCEPT__IO
 
-#include <meta/void_t.hpp>
+#include "sophia/meta/void_t.hpp"
 
 #include <type_traits>
 #include <ostream>
@@ -25,7 +25,9 @@ namespace sophia
      */
     template<typename Type>
     using outputable = meta::void_t<
-      std::is_base_of<std::ostream, decltype(operator<<(std::declval<std::ostream &>(), std::declval<Type const &>()))>
+      std::enable_if_t<
+        std::is_base_of<std::ostream, std::remove_reference_t<decltype(std::declval<std::ostream &>() << std::declval<Type const &>())>>::value,
+      Type>
     >;
 
     }

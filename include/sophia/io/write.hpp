@@ -1,8 +1,7 @@
 #ifndef SOPHIA_IO__WRITE
 #define SOPHIA_IO__WRITE
 
-#include <_internal/ordered_evaluator.hpp>
-#include <io/_ns.hpp>
+#include "sophia/_internal/ordered_evaluator.hpp"
 
 #include <iostream>
 #include <type_traits>
@@ -26,7 +25,7 @@ namespace sophia
              typename... ValueTypes>
     void write(StreamType & stream, ValueTypes const & ...values)
       {
-      _internal::ordered_evaluator{(stream << values)...};
+      ::sophia::_internal::ordered_evaluator{(stream << values)...};
       }
 
     /**
@@ -54,7 +53,7 @@ namespace sophia
              typename... ValueTypes>
     void writeln(StreamType & stream, ValueTypes const & ...values)
       {
-      _internal::ordered_evaluator{(stream << values)..., stream << '\n'};
+      ::sophia::_internal::ordered_evaluator{(stream << values)..., stream << '\n'};
       }
 
     /**

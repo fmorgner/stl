@@ -1,7 +1,7 @@
 #ifndef SOPHIA_META__TRAITS
 #define SOPHIA_META__TRAITS
 
-#include <concept/io.hpp>
+#include "sophia/concept/io.hpp"
 
 namespace sophia
   {
