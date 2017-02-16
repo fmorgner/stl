@@ -148,7 +148,7 @@ namespace sophia
 
         try
           {
-          auto idx = std::stoll(placeholder);
+          auto idx = std::stoull(placeholder);
           if(idx >= elements.size() || idx < 0)
             {
             stream << '{' << idx << '}';
