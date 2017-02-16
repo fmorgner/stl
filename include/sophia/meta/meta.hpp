@@ -17,4 +17,3 @@
 #include "sophia/meta/void_t.hpp"
 
 #endif
-

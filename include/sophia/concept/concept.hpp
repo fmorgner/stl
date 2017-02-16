@@ -24,4 +24,3 @@
 #include "sophia/concept/io.hpp"
 
 #endif
-

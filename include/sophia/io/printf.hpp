@@ -1,7 +1,6 @@
 #ifndef SOPHIA_IO__PRINTF
 #define SOPHIA_IO__PRINTF
 
-#include "sophia/_internal/ordered_evaluator.hpp"
 #include "sophia/concept/io.hpp"
 
 #include <array>
@@ -15,8 +14,9 @@ namespace sophia
   namespace io
     {
 
-    namespace _internal
+    namespace internal
       {
+
       /**
        * @internal
        * @author Felix Morgner
@@ -122,8 +122,8 @@ namespace sophia
              typename ...ValueTypes >
     void printf(StreamType & stream, std::string const & format, ValueTypes const & ...values)
       {
-      std::array<std::unique_ptr<_internal::printable>, sizeof...(values)> elements{
-        {std::make_unique<_internal::typed_printable<ValueTypes>>(values)...}
+      std::array<std::unique_ptr<internal::printable>, sizeof...(values)> elements{
+        {std::make_unique<internal::typed_printable<ValueTypes>>(values)...}
         };
 
       auto opening = 0ull;

@@ -13,7 +13,7 @@ namespace sophia
   namespace meta
     {
 
-    namespace _internal
+    namespace internal
       {
       /**
        * @internal
@@ -38,12 +38,10 @@ namespace sophia
      * @brief A template type alias to transform an arbitrary amount of arbitrary types into void.
      */
     template<typename ...Erased>
-    using void_t = typename _internal::void_type<Erased...>::type;
+    using void_t = typename internal::void_type<Erased...>::type;
 
     }
 
   }
 
-
 #endif
-

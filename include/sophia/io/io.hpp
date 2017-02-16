@@ -17,4 +17,3 @@
 #include "write.hpp"
 
 #endif
-

@@ -1,5 +1,5 @@
-#ifndef SOPHIA
-#define SOPHIA
+#ifndef SOPHIA__SOPHIA
+#define SOPHIA__SOPHIA
 
 /**
  * @namespace sophia
@@ -17,4 +17,3 @@
 #include "sophia/meta/meta.hpp"
 
 #endif
-

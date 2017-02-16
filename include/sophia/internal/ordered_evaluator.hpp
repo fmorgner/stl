@@ -5,19 +5,19 @@
  * @internal
  * @file ordered_evaluator.hpp
  * @author Felix Morgner
- * @since 1.0
+ * @since 0.1
  */
 
 namespace sophia
   {
 
-  namespace _internal
+  namespace internal
     {
 
     /**
      * @internal
      * @author Felix Morgner
-     * @since 1.0
+     * @since 0.1
      *
      * @brief A meta class to guarantee ordered evaluation of a variable number of expressions.
      *
@@ -46,4 +46,3 @@ namespace sophia
   }
 
 #endif
-

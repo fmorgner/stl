@@ -1,7 +1,7 @@
 #ifndef SOPHIA_IO__WRITE
 #define SOPHIA_IO__WRITE
 
-#include "sophia/_internal/ordered_evaluator.hpp"
+#include "sophia/internal/ordered_evaluator.hpp"
 
 #include <iostream>
 #include <type_traits>
@@ -12,11 +12,10 @@ namespace sophia
   namespace io
     {
 
-
     /**
      * @ingroup sophia_io
      * @author Felix Morgner
-     * @since 1.0
+     * @since 0.1
      *
      * @brief Typesafe output to arbitrary objects of type std::ostream
      */
@@ -25,13 +24,13 @@ namespace sophia
              typename... ValueTypes>
     void write(StreamType & stream, ValueTypes const & ...values)
       {
-      ::sophia::_internal::ordered_evaluator{(stream << values)...};
+      ::sophia::internal::ordered_evaluator{(stream << values)...};
       }
 
     /**
      * @ingroup sophia_io
      * @author Felix Morgner
-     * @since 1.0
+     * @since 0.1
      *
      * @brief Typesafe output to the standard output device
      */
@@ -44,7 +43,7 @@ namespace sophia
     /**
      * @ingroup sophia_io
      * @author Felix Morgner
-     * @since 1.0
+     * @since 0.1
      *
      * @brief Typesafe line output to arbitrary objects of type std::ostream
      */
@@ -53,13 +52,13 @@ namespace sophia
              typename... ValueTypes>
     void writeln(StreamType & stream, ValueTypes const & ...values)
       {
-      ::sophia::_internal::ordered_evaluator{(stream << values)..., stream << '\n'};
+      ::sophia::internal::ordered_evaluator{(stream << values)..., stream << '\n'};
       }
 
     /**
      * @ingroup sophia_io
      * @author Felix Morgner
-     * @since 1.0
+     * @since 0.1
      *
      * @brief Typesafe line output to the standard output device
      */
@@ -74,4 +73,3 @@ namespace sophia
   }
 
 #endif
-
