@@ -5,6 +5,11 @@
 #include <stdexcept>
 #include <string>
 
+#if defined(__GNUG__)
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wterminate"
+#endif
+
 namespace sophia::flow
   {
 
