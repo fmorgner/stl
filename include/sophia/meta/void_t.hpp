@@ -17,7 +17,7 @@ namespace sophia::meta
      * @author Felix Morgner
      * @since 0.1
      *
-     * @brie A template class to transform an arbitrary amount of arbitrary types into void.f
+     * @brief A template class to transform an arbitrary amount of arbitrary types into void.f
      *
      * This class enables the use of SFINAE to select template specilizations based on contraints base on the concepts of
      * "more specialized" template instantiations.
@@ -25,7 +25,17 @@ namespace sophia::meta
      * @note This class is not be required if C++ newer than 14 is used.
      */
     template<typename ...>
-    struct void_type { using type = void; };
+    struct void_type
+      {
+      /**
+       * @internal
+       * @author Felix Morgner
+       * @since 0.1
+       *
+       * An alias for void, so that void_type::type is always valid
+       */
+      using type = void;
+      };
     }
 
   /**

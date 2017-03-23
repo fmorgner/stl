@@ -13,7 +13,7 @@
  * @defgroup sophia_io Input/Output
  */
 
-#include "printf.hpp"
-#include "write.hpp"
+#include "sophia/io/printf.hpp"
+#include "sophia/io/write.hpp"
 
 #endif

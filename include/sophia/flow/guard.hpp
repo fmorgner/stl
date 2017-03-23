@@ -13,20 +13,6 @@
 namespace sophia::flow
   {
 
-  /**
-   * @author Felix Morgner
-   * @since 0.2
-   *
-   * @brief An exception type for #sophia::flow::guard violations
-   *
-   * This exception will be thrown of the condition of a #sophia::flow::guard statement is violated. It will be thrown in a
-   * manner that is uncatchable to ensure program termination. For the rationale see #sophia::flow::guard.
-   */
-  struct guard_violation : std::logic_error
-    {
-    guard_violation(std::string const & message) : std::logic_error{"terminating due to guard violation: " + message} { }
-    };
-
   namespace internal
     {
 
@@ -35,15 +21,45 @@ namespace sophia::flow
      * @author Felix Morgner
      * @since 0.2
      *
+     * @brief An exception type for ::sophia::flow::guard violations
+     *
+     * This exception will be thrown of the condition of a #sophia::flow::guard statement is violated. It will be thrown in a
+     * manner that is uncatchable to ensure program termination. For the rationale see #sophia::flow::guard.
+     */
+    struct guard_violation : std::logic_error
+      {
+      /**
+       * @internal
+       * @author Felix Morgner
+       * @since 0.2
+       *
+       * @brief Construct a new guard_violation from the given message
+       * @param message The message to display when the guard is violated
+       */
+      guard_violation(std::string const & message) : std::logic_error{"terminating due to guard violation: " + message} { }
+      };
+
+    /**
+     * @internal
+     * @author Felix Morgner
+     * @since 0.2
+     *
      * @brief A wrapper around a guard condition
      *
-     * This wrapper class checks the supplied guard condition during destruction, throwing an instance of
-     * #sophia::flow::guard_violation if the condition is violated. This ensures program termination on condition violation
-     * because destructors are implicitly @p noexcept since C++11. Termination is by design, since we consider the program to be
-     * internally inconsistent if a guard condition is violated.
+     * This wrapper class checks the supplied guard condition during destruction, throwing an exception if the condition
+     * is violated. This ensures program termination on conditions violation because destructors are implicitly @p noexcept
+     * since C++11. Termination is by design, since we consider the program to be internally inconsistent if a guard condition
+     * is violated.
      */
     struct guard
       {
+      /**
+       * @internal
+       * @author Felix Morgner
+       * @since 0.2
+       *
+       * @brief Construct a new guard
+       */
       explicit guard(bool const condition, std::string const & message) :
         m_message{message},
         m_condition{condition}
@@ -67,6 +83,7 @@ namespace sophia::flow
         }
 
       /**
+       * @internal
        * @author Felix Morgner
        * @since 0.2
        *
@@ -81,6 +98,7 @@ namespace sophia::flow
         }
 
       /**
+       * @internal
        * @author Felix Morgner
        * @since 0.2
        *
@@ -105,16 +123,53 @@ namespace sophia::flow
     }
 
   /**
-   * @author Felix Morgner
-   * @since 0.2
+   * @ingroup sophia_flow
    *
    * @brief Guard the rest of the containing compound statement with the provided condition
    *
    * Guards make it possible to 'protect' or 'guard' the rest of its containing compound statement based on a precondition. If
    * the precondition is violated, the program will be terminated.
+   *
+   * @par Example
+   * @rst
+   * .. code-block:: c++
+   *    :linenos:
+   *
+   *    #include <sophia/flow/guard.hpp>
+   *    #include <sophia/io/printf.hpp>
+   *
+   *    void handle_answer(int answer) {
+   *      using namespace sophia;
+   *
+   *      flow::guard(answer == 42, "Wrong answer!") || [](auto const & msg){
+   *        io::printf("I guess we will die because: '{0}'\n\n", msg);
+   *      };
+   *
+   *      io::printf("I am sure this is the right answer: {0}\n", answer);
+   *    }
+   *
+   *    int main() try {
+   *      handle_answer(42);
+   *    } catch (...) {
+   *      // We cannot catch the guard_violation
+   *    }
+   * @endrst
+   * @par Possible output
+   * @rst
+   * .. code-block:: text
+   *
+   *    I guess we will die because: 'Wrong answer!'.
+   *
+   *    terminate called after throwing an instance of 'sophia::flow::guard_violation'
+   *      what():  terminating due to guard violation: Wrong answer!
+   *    Aborted (core dumped)
+   * @endrst
+   *
+   * @author Felix Morgner
+   * @since 0.2
    */
   template<typename ConditionType>
-  internal::guard guard(ConditionType && condition, std::string const & violationMessage = "")
+  auto guard(ConditionType && condition, std::string const & violationMessage = "")
     {
     return internal::guard{static_cast<bool>(condition), violationMessage};
     }

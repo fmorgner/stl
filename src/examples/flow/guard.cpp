@@ -5,7 +5,7 @@ void handle_answer(int answer)
   {
   using namespace sophia;
 
-  flow::guard(answer == 42, "The answer is wrong!!") || [](auto const & message){
+  flow::guard(answer == 42, "The answer is wrong!!") or [](auto const & message){
     io::printf("I guess we will die because: '{0}'. Goodbye cruel world...\n\n", message);
   };
 
