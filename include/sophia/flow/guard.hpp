@@ -37,6 +37,22 @@ namespace sophia::flow
        * @param message The message to display when the guard is violated
        */
       guard_violation(std::string const & message) : std::logic_error{"terminating due to guard violation: " + message} { }
+
+      /**
+       * @internal
+       * @author Felix Morgner
+       * @since 0.2
+       *
+       * @brief Construct a new guard_violation from the given message and exception
+       * @param message The message to display when the guard is violated
+       * @param exception The exception that occured during evaluation of the violation handler
+       */
+      guard_violation(std::string const & message, std::exception const & exception) :
+        guard_violation{
+          std::string{"unhandled exception '"} +
+          exception.what() +
+          "' during guard violation handling. Original violation message '" + message + "'"}
+        { }
       };
 
     /**
@@ -76,7 +92,18 @@ namespace sophia::flow
 
         if(m_otherwise)
           {
-          m_otherwise();
+          try
+            {
+            m_otherwise();
+            }
+          catch(std::exception const & e)
+            {
+            throw guard_violation{m_message, e};
+            }
+          catch(...)
+            {
+            throw guard_violation{m_message, std::runtime_error{"Unknown exception"}};
+            }
           }
 
         throw guard_violation{m_message};
