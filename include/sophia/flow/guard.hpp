@@ -130,6 +130,19 @@ namespace sophia::flow
    * Guards make it possible to 'protect' or 'guard' the rest of its containing compound statement based on a precondition. If
    * the precondition is violated, the program will be terminated.
    *
+   * The guard object returned by this function supports attaching a callable object (e.g. a std::function object, a
+   * pointer-to-function, or a lambda expression) through use of the `||` (logical or operator). The attached function will be
+   * called when the guard is violated, allowing you to do any necessary clean-up to allow for a more graceful handling of the
+   * error condition. The attached function object must return void and take either no arguments, or a single argument of type
+   * std::string. If the std::string argument is present, it will contain the guards violation message. As soon as the attached
+   * function returns, the program will be terminated by the same means as if no function was attached to the guard.
+   *
+   * In regular use, the guard object returned by this function is not assigned to any variable. This causes the object to be
+   * immediately desctructed, thus ensuring the 'evaluation' of the guard condition and possible termination of the program as
+   * soon as the statement declaring the guard is reached. It is however possible to store a guard for later use which allows
+   * for early definition of post-condition guards. The guard will then be evaluated as soon as its lifetime ends, e.g when the
+   * stored object leaves scope.
+   *
    * @par Example
    * @rst
    * .. code-block:: c++
@@ -149,7 +162,7 @@ namespace sophia::flow
    *    }
    *
    *    int main() try {
-   *      handle_answer(42);
+   *      handle_answer(43);
    *    } catch (...) {
    *      // We cannot catch the guard_violation
    *    }
