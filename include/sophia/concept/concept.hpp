@@ -22,5 +22,6 @@
  */
 
 #include "sophia/concept/io.hpp"
+#include "sophia/concept/type_descriptor.hpp"
 
 #endif

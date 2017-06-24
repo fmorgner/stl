@@ -15,5 +15,6 @@
 #include "sophia/concept/concept.hpp"
 #include "sophia/io/io.hpp"
 #include "sophia/meta/meta.hpp"
+#include "sophia/string/string.hpp"
 
 #endif
